@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dabaran Cold Outreach Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    color-scheme: light;
+    --page:        #f7f7f4;
+    --surface:     #fcfcfb;
+    --surface-2:   #f2f1ec;
+    --ink:         #0b0b0b;
+    --ink-2:       #52514e;
+    --ink-muted:   #898781;
+    --grid:        #e1e0d9;
+    --baseline:    #c3c2b7;
+    --border:      rgba(11,11,11,0.10);
+    --accent:      #2a78d6;
+    --accent-ink:  #ffffff;
+    --accent-wash: rgba(42,120,214,0.10);
+    --good:        #0ca30c;
+    --good-bg:     rgba(12,163,12,0.11);
+    --warn:        #b9790a;
+    --warn-bg:     rgba(250,178,25,0.18);
+    --crit:        #d03b3b;
+    --crit-bg:     rgba(208,59,59,0.11);
+    --seq-1: #86b6ef; --seq-2: #6da7ec; --seq-3: #3987e5; --seq-4: #256abf; --seq-5: #184f95;
+    --shadow: 0 1px 2px rgba(11,11,11,0.04), 0 8px 24px -12px rgba(11,11,11,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --page:        #0d0d0d;
+      --surface:     #17181a;
+      --surface-2:   #1e1f21;
+      --ink:         #ffffff;
+      --ink-2:       #c3c2b7;
+      --ink-muted:   #8f8d86;
+      --grid:        #2c2c2a;
+      --baseline:    #383835;
+      --border:      rgba(255,255,255,0.10);
+      --accent:      #5b9ce8;
+      --accent-ink:  #08131f;
+      --accent-wash: rgba(91,156,232,0.14);
+      --good:        #22b622;
+      --good-bg:     rgba(34,182,34,0.16);
+      --warn:        #f0ab2c;
+      --warn-bg:     rgba(240,171,44,0.18);
+      --crit:        #e66767;
+      --crit-bg:     rgba(230,103,103,0.16);
+      --seq-1: #184f95; --seq-2: #256abf; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #9ec5f4;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page:        #0d0d0d;
+    --surface:     #17181a;
+    --surface-2:   #1e1f21;
+    --ink:         #ffffff;
+    --ink-2:       #c3c2b7;
+    --ink-muted:   #8f8d86;
+    --grid:        #2c2c2a;
+    --baseline:    #383835;
+    --border:      rgba(255,255,255,0.10);
+    --accent:      #5b9ce8;
+    --accent-ink:  #08131f;
+    --accent-wash: rgba(91,156,232,0.14);
+    --good:        #22b622;
+    --good-bg:     rgba(34,182,34,0.16);
+    --warn:        #f0ab2c;
+    --warn-bg:     rgba(240,171,44,0.18);
+    --crit:        #e66767;
+    --crit-bg:     rgba(230,103,103,0.16);
+    --seq-1: #184f95; --seq-2: #256abf; --seq-3: #3987e5; --seq-4: #6da7ec; --seq-5: #9ec5f4;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 28px 72px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  button { font-family: inherit; }
+  input, select { font-family: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .masthead h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .masthead h1[contenteditable="true"],
+  .masthead .sub[contenteditable="true"] {
+    cursor: text;
+    border-radius: 6px;
+    padding: 2px 6px;
+    margin-left: -6px;
+    margin-right: -6px;
+    border: 1px solid transparent;
+  }
+  .masthead h1[contenteditable="true"] { margin-bottom: 4px; }
+  .masthead h1[contenteditable="true"]:hover,
+  .masthead .sub[contenteditable="true"]:hover { background: var(--surface-2); }
+  .masthead h1[contenteditable="true"]:focus,
+  .masthead .sub[contenteditable="true"]:focus { background: var(--accent-wash); border-color: var(--accent); outline: none; }
+  .masthead .sub {
+    color: var(--ink-2);
+    font-size: 14.5px;
+    max-width: 62ch;
+    margin: 0;
+  }
+  .masthead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+  .meta .n { color: var(--ink-2); font-family: "IBM Plex Mono", monospace; }
+
+  /* ---------- Save bar ---------- */
+  .save-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .save-bar-right { display: flex; align-items: center; gap: 12px; }
+  .save-status {
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .save-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-muted); flex: none; }
+  .save-status.dirty .dot { background: var(--warn); }
+  .save-status.saved .dot { background: var(--good); }
+  .save-status.error { color: var(--crit); }
+  .save-status.error .dot { background: var(--crit); }
+  .btn {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+  }
+  .btn:hover { background: var(--surface-2); }
+  .btn.primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: transparent;
+  }
+  .btn.primary:hover { filter: brightness(1.06); }
+  .btn.primary:disabled { opacity: 0.55; cursor: default; filter: none; }
+  .btn.ghost { background: transparent; box-shadow: none; }
+  .btn.small { padding: 5px 10px; font-size: 11.5px; border-radius: 6px; }
+
+  /* ---------- Section labels ---------- */
+  .eyebrow {
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin: 0 0 14px;
+  }
+
+  /* ---------- KPI grid ---------- */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 16px 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .kpi .label {
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+  }
+  .kpi .value-row { display: flex; align-items: baseline; gap: 6px; }
+  .kpi .value {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 26px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    border-radius: 5px;
+    padding: 1px 5px;
+    margin: -1px -5px;
+    cursor: text;
+    border: 1px solid transparent;
+    outline: none;
+  }
+  .kpi .value:hover { background: var(--surface-2); }
+  .kpi .value:focus { background: var(--accent-wash); border-color: var(--accent); }
+  .reset-btn {
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    border-radius: 5px;
+  }
+  .reset-btn:hover { background: var(--accent-wash); }
+  .kpi .caption { font-size: 11.5px; color: var(--ink-2); }
+  .kpi .caption.flat { color: var(--ink-muted); }
+  .spark { width: 100%; height: 26px; display: block; }
+  .spark rect { fill: var(--accent); opacity: 0.85; }
+  .spark rect.zero { fill: var(--grid); opacity: 1; }
+
+  /* ---------- Chart panels ---------- */
+  .panels {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 16px;
+    margin-bottom: 36px;
+    align-items: stretch;
+  }
+  @media (max-width: 860px) { .panels { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px 18px;
+    box-shadow: var(--shadow);
+  }
+  .panel h2 { font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: 17px; margin: 0 0 2px; }
+  .panel .panel-sub { font-size: 12.5px; color: var(--ink-muted); margin: 0 0 16px; }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 168px 1fr 56px;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--grid);
+  }
+  .bar-row:last-child { border-bottom: none; }
+  .bar-row .name { font-size: 12.5px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-track { position: relative; height: 16px; background: var(--surface-2); border-radius: 4px; overflow: visible; }
+  .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 4px; cursor: pointer; transition: filter 120ms ease; }
+  .bar-fill:hover, .bar-fill:focus-visible { filter: brightness(1.12); outline: none; }
+  .bar-row .pct { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-variant-numeric: tabular-nums; text-align: right; }
+
+  .funnel { display: flex; flex-direction: column; gap: 4px; }
+  .funnel-row { display: grid; grid-template-columns: 92px 1fr 76px; align-items: center; gap: 10px; }
+  .funnel-track { position: relative; height: 22px; background: var(--surface-2); border-radius: 5px; }
+  .funnel-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; display: flex; align-items: center; cursor: pointer; }
+  .funnel-row .stage { font-size: 12px; color: var(--ink-2); font-weight: 500; }
+  .funnel-row .count { font-family: "IBM Plex Mono", monospace; font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .funnel-drop { font-size: 10.5px; color: var(--ink-muted); grid-column: 2 / 3; margin: -1px 0 3px 2px; }
+  .funnel-note { font-size: 11px; color: var(--ink-muted); margin-top: 10px; }
+
+  .tip {
+    position: fixed;
+    pointer-events: none;
+    background: var(--ink);
+    color: var(--page);
+    font-size: 11.5px;
+    line-height: 1.5;
+    padding: 7px 10px;
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    max-width: 240px;
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 10px));
+    transition: opacity 100ms ease;
+    z-index: 50;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+  .tip b { font-family: "IBM Plex Mono", monospace; }
+  .tip.show { opacity: 1; }
+
+  /* ---------- Table ---------- */
+  .table-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 20px 22px 18px;
+    margin-bottom: 24px;
+  }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 1195px; table-layout: fixed; }
+  #campTable th:nth-child(1), #campTable td:nth-child(1) { width: 260px; }
+  #campTable th:nth-child(2), #campTable td:nth-child(2) { width: 140px; }
+  #campTable th.num, #campTable td.num { width: 82px; }
+  #campTable th:nth-child(10), #campTable td:nth-child(10) { width: 185px; }
+  #campTable th:nth-child(11), #campTable td:nth-child(11) { width: 100px; }
+  #campTable th:nth-child(12), #campTable td:nth-child(12) { width: 30px; }
+  thead th {
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-muted);
+    padding: 0 8px 10px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  thead th.num, td.num { text-align: right; }
+  tbody td { padding: 8px 8px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-2); }
+  td.num, td.mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  .cell-input {
+    width: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    padding: 5px 6px;
+    border-radius: 5px;
+    text-align: inherit;
+    text-overflow: ellipsis;
+  }
+  .cell-input:hover { background: var(--surface-2); }
+  .cell-input:focus { background: var(--accent-wash); border-color: var(--accent); outline: none; }
+  input.cell-input[type="number"] {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    -moz-appearance: textfield;
+  }
+  input.cell-input[type="number"]::-webkit-outer-spin-button,
+  input.cell-input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .name-input { font-weight: 600; }
+  .segment-input { color: var(--ink-muted); font-size: 11px; margin-top: 1px; }
+  select.cell-input { appearance: none; padding-right: 20px; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 12px) 55%, calc(100% - 7px) 55%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; cursor: pointer; }
+  .rate-hint { font-size: 10.5px; color: var(--ink-muted); padding: 0 6px; white-space: nowrap; }
+  .del-btn {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .del-btn:hover { background: var(--crit-bg); color: var(--crit); border-color: var(--border); }
+  .table-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+  .table-foot .hint { font-size: 11.5px; color: var(--ink-muted); }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px 3px 7px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .pill.good { background: var(--good-bg); color: var(--good); }
+  .pill.warn { background: var(--warn-bg); color: var(--warn); }
+  .pill.neutral { background: var(--surface-2); color: var(--ink-muted); }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+  .status-cell { position: relative; display: inline-block; }
+  .status-cell select.cell-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+
+  /* ---------- Save history ---------- */
+  .save-history-list { list-style: none; margin: 0; padding: 0; max-height: 280px; overflow-y: auto; }
+  .save-history-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 2px;
+    border-bottom: 1px dashed var(--grid);
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .save-history-list li:last-child { border-bottom: none; }
+  .save-history-list li .when {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--ink-muted);
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .save-history-empty { font-size: 12.5px; color: var(--ink-muted); margin: 0; }
+  .save-history-list li.clickable { cursor: pointer; border-radius: 6px; padding-left: 6px; padding-right: 6px; margin: 0 -6px; }
+  .save-history-list li.clickable:hover { background: var(--surface-2); }
+  .save-history-list li .save-view-hint { font-size: 11px; color: var(--accent); font-weight: 600; margin-right: 8px; }
+  .save-history-list li .row-right { display: flex; align-items: baseline; gap: 8px; }
+  .history-del-btn {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex: none;
+  }
+  .history-del-btn:hover { background: var(--crit-bg); color: var(--crit); border-color: var(--border); }
+  .history-open-btn {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex: none;
+  }
+  .history-open-btn:hover { background: var(--accent-wash); color: var(--accent); border-color: var(--border); }
+
+  /* ---------- History viewer modal ---------- */
+  .history-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11,11,11,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 100;
+  }
+  /* The [hidden] attribute and this class both carry the same specificity, and an
+     author rule wins over the browser's default [hidden]{display:none} at equal
+     specificity -- so without this override, setting .hidden = true on the overlay
+     never actually hides it (this was the real bug behind "Close/Delete/Restore
+     don't do anything": they worked perfectly, the modal just never visually closed). */
+  .history-modal-overlay[hidden] {
+    display: none;
+  }
+  .history-modal {
+    background: var(--surface);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 1100px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .history-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .history-modal-head h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 20px; margin: 0; }
+  .history-modal-when { font-size: 12.5px; color: var(--ink-muted); margin: 4px 0 0; }
+  .history-modal-body { padding: 20px 24px; overflow-y: auto; }
+  .history-modal-body .kpi-grid,
+  .history-modal-body .panels { margin-bottom: 28px; }
+  .history-modal-body .table-panel { box-shadow: none; border: 1px solid var(--border); }
+  .history-modal-body .no-snapshot { font-size: 13px; color: var(--ink-muted); }
+  .history-modal-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 22px;
+    border-top: 1px solid var(--border);
+  }
+  .history-modal-foot .hint { font-size: 11.5px; color: var(--ink-muted); }
+
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <h1 id="reportTitle" contenteditable="true" spellcheck="false" title="Click to edit">Dabaran Cold Outreach Report</h1>
+      <p class="sub" id="reportSubtitle" contenteditable="true" spellcheck="false" title="Click to edit">Seven prospecting sends across home services, dental, and multi-industry lists — July 21–24, 2026 launch window.</p>
+    </div>
+    <div class="meta">
+      Dabaran &middot; Outbound Lead Gen<br>
+      <span class="n" id="campaignCount">7</span> campaigns &middot; <span id="statusSummary">6 complete, 1 in progress</span><br>
+      <span id="lastSavedLine">Not yet saved</span>
+    </div>
+  </div>
+
+  <div class="save-bar" id="saveBar">
+    <a class="btn ghost small" id="lockedReportLink" href="?report=1#report" target="_blank" rel="noopener">Locked report ↗</a>
+    <div class="save-bar-right">
+      <div class="save-status" id="saveStatus"><span class="dot"></span><span id="saveStatusText">All changes saved</span></div>
+      <button class="btn primary" id="saveBtn">Save changes</button>
+    </div>
+  </div>
+
+  <p class="eyebrow">Program totals</p>
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <div class="panels">
+    <div class="panel">
+      <h2>Open rate by campaign</h2>
+      <p class="panel-sub">Opens ÷ total sent, ranked high to low</p>
+      <div id="barChart"></div>
+    </div>
+    <div class="panel">
+      <h2>Where the funnel narrows</h2>
+      <p class="panel-sub">All campaigns combined, sent → opportunity</p>
+      <div class="funnel" id="funnel"></div>
+      <p class="funnel-note">Bar length uses a square-root scale so the smaller stages stay visible — read exact counts from the labels.</p>
+    </div>
+  </div>
+
+  <p class="eyebrow" id="tableEyebrow">Campaign detail — click any cell to edit</p>
+  <div class="table-panel">
+    <div class="table-scroll">
+      <table id="campTable">
+        <thead>
+          <tr>
+            <th>Campaign</th>
+            <th>Send window</th>
+            <th class="num">Sent</th>
+            <th class="num">Opened</th>
+            <th class="num">Replied</th>
+            <th class="num">DNC</th>
+            <th class="num">Interested</th>
+            <th class="num">Opps</th>
+            <th class="num">Meetings</th>
+            <th>Status</th>
+            <th>Completed</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="campTbody"></tbody>
+      </table>
+    </div>
+    <div class="table-foot" id="tableFoot">
+      <button class="btn small" id="addBtn">+ Add campaign</button>
+      <span class="hint">Rates recalculate automatically as you edit sent / opened / replied.</span>
+    </div>
+  </div>
+
+  <p class="eyebrow">Save history</p>
+  <div class="table-panel">
+    <ul class="save-history-list" id="saveHistoryList"></ul>
+    <p class="save-history-empty" id="saveHistoryEmpty">No saves yet.</p>
+  </div>
+
+</div>
+
+<div class="tip" id="tip"></div>
+
+<div class="history-modal-overlay" id="historyModalOverlay" hidden>
+  <div class="history-modal" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle">
+    <div class="history-modal-head">
+      <div>
+        <p class="eyebrow" style="margin:0 0 4px">Saved version</p>
+        <h3 id="historyModalTitle">Dabaran Cold Outreach Report</h3>
+        <p class="history-modal-when" id="historyModalWhen"></p>
+      </div>
+      <button type="button" class="btn ghost small" id="historyModalClose">Close</button>
+    </div>
+    <div class="history-modal-body" id="historyModalBody"></div>
+    <div class="history-modal-foot">
+      <span class="hint" id="historyModalHint">Viewing a past save — the live dashboard is unaffected until you restore it.</span>
+      <div class="save-bar-right">
+        <button type="button" class="btn ghost small" id="historyModalOpenTab">Open in new tab</button>
+        <button type="button" class="btn ghost small" id="historyModalDelete">Delete this version</button>
+        <button type="button" class="btn primary" id="historyModalRestore">Restore this version</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var STORAGE_KEY = "dabaran-cold-outreach-report:state";
+  var DEFAULT_STATE = {"campaigns": [{"name": "$100 LP | EST | Home Services | 1-10 | Valid", "segment": "ET home-services owners, 1\u201310 employees, verified-valid list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 3291, "opens": 1464, "replies": 8, "dnc": 0, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 13, 2026", "openRate": 44.48495897903373, "replyRate": 0.24308720753570343}, {"name": "AI Search Growth - US Multi Industry | 1-10", "segment": "Multi-industry owners, 1\u201310 employees, all US time zones", "window": "1:00\u20135:00 PM ET \u00b7 Jul 23", "sent": 1994, "opens": 1314, "replies": 9, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 6, 2026", "openRate": 65.89769307923771, "replyRate": 0.4513540621865597}, {"name": "US Dentist Clinics | Owners | 1\u201320 | ET CT", "segment": "Dental practice/clinic owners, 1\u201320 employees", "window": "1:00\u20135:00 PM ET \u00b7 Jul 24", "sent": 1415, "opens": 1024, "replies": 3, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 18, 2026", "openRate": 72.36749116607774, "replyRate": 0.21201413427561835}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Catch-All", "segment": "CT home-services owners, 1\u201310 employees, catch-all list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 1601, "opens": 441, "replies": 8, "dnc": 0, "interested": 1, "opportunities": 1, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 27.545284197376642, "replyRate": 0.49968769519050593}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Valid", "segment": "CT home-services owners, 1\u201310 employees, verified-valid list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 2868, "opens": 1300, "replies": 10, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 45.32775453277546, "replyRate": 0.3486750348675035}, {"name": "$100 LP | EST | Home Services | 1-10 | Catch-All", "segment": "ET home-services owners, 1\u201310 employees, catch-all list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 1355, "opens": 737, "replies": 8, "dnc": 2, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 22, 2026", "openRate": 54.39114391143911, "replyRate": 0.5904059040590406}], "overrides": {"sent": 22222, "openRate": 55}, "title": "Dabaran Cold Outreach Report", "subtitle": "Seven prospecting sends across home services, dental, and multi-industry lists \u2014 July 21\u201324, 2026 launch window.", "history": [{"savedAt": "2026-09-11T20:48:01.319Z", "campaigns": [{"name": "$100 LP | EST | Home Services | 1-10 | Valid", "segment": "ET home-services owners, 1\u201310 employees, verified-valid list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 3291, "opens": 1464, "replies": 8, "dnc": 0, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 13, 2026", "openRate": 44.48495897903373, "replyRate": 0.24308720753570343}, {"name": "AI Search Growth - US Multi Industry | 1-10", "segment": "Multi-industry owners, 1\u201310 employees, all US time zones", "window": "1:00\u20135:00 PM ET \u00b7 Jul 23", "sent": 1994, "opens": 1314, "replies": 9, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 6, 2026", "openRate": 65.89769307923771, "replyRate": 0.4513540621865597}, {"name": "US Dentist Clinics | Owners | 1\u201320 | ET CT", "segment": "Dental practice/clinic owners, 1\u201320 employees", "window": "1:00\u20135:00 PM ET \u00b7 Jul 24", "sent": 1415, "opens": 1024, "replies": 3, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 18, 2026", "openRate": 72.36749116607774, "replyRate": 0.21201413427561835}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Catch-All", "segment": "CT home-services owners, 1\u201310 employees, catch-all list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 1601, "opens": 441, "replies": 8, "dnc": 0, "interested": 1, "opportunities": 1, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 27.545284197376642, "replyRate": 0.49968769519050593}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Valid", "segment": "CT home-services owners, 1\u201310 employees, verified-valid list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 2868, "opens": 1300, "replies": 10, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 45.32775453277546, "replyRate": 0.3486750348675035}, {"name": "$100 LP | EST | Home Services | 1-10 | Catch-All", "segment": "ET home-services owners, 1\u201310 employees, catch-all list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 1355, "opens": 737, "replies": 8, "dnc": 2, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 22, 2026", "openRate": 54.39114391143911, "replyRate": 0.5904059040590406}], "overrides": {"sent": 22222, "openRate": 55}, "title": "Dabaran Cold Outreach Report", "subtitle": "Seven prospecting sends across home services, dental, and multi-industry lists \u2014 July 21\u201324, 2026 launch window."}, {"savedAt": "2026-09-11T20:52:21.455Z", "campaigns": [{"name": "$100 LP | EST | Home Services | 1-10 | Valid", "segment": "ET home-services owners, 1\u201310 employees, verified-valid list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 3291, "opens": 1464, "replies": 8, "dnc": 0, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 13, 2026", "openRate": 44.48495897903373, "replyRate": 0.24308720753570343}, {"name": "AI Search Growth - US Multi Industry | 1-10", "segment": "Multi-industry owners, 1\u201310 employees, all US time zones", "window": "1:00\u20135:00 PM ET \u00b7 Jul 23", "sent": 1994, "opens": 1314, "replies": 9, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 6, 2026", "openRate": 65.89769307923771, "replyRate": 0.4513540621865597}, {"name": "US Dentist Clinics | Owners | 1\u201320 | ET CT", "segment": "Dental practice/clinic owners, 1\u201320 employees", "window": "1:00\u20135:00 PM ET \u00b7 Jul 24", "sent": 1415, "opens": 1024, "replies": 3, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 18, 2026", "openRate": 72.36749116607774, "replyRate": 0.21201413427561835}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Catch-All", "segment": "CT home-services owners, 1\u201310 employees, catch-all list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 1601, "opens": 441, "replies": 8, "dnc": 0, "interested": 1, "opportunities": 1, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 27.545284197376642, "replyRate": 0.49968769519050593}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Valid", "segment": "CT home-services owners, 1\u201310 employees, verified-valid list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 2868, "opens": 1300, "replies": 10, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 45.32775453277546, "replyRate": 0.3486750348675035}, {"name": "$100 LP | EST | Home Services | 1-10 | Catch-All", "segment": "ET home-services owners, 1\u201310 employees, catch-all list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 1355, "opens": 737, "replies": 8, "dnc": 2, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 22, 2026", "openRate": 54.39114391143911, "replyRate": 0.5904059040590406}], "overrides": {"sent": 22222, "openRate": 55}, "title": "Dabaran Cold Outreach Report", "subtitle": "Seven prospecting sends across home services, dental, and multi-industry lists \u2014 July 21\u201324, 2026 launch window."}, {"savedAt": "2026-09-11T21:02:04.203Z", "campaigns": [{"name": "$100 LP | EST | Home Services | 1-10 | Valid", "segment": "ET home-services owners, 1\u201310 employees, verified-valid list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 3291, "opens": 1464, "replies": 8, "dnc": 0, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 13, 2026", "openRate": 44.48495897903373, "replyRate": 0.24308720753570343}, {"name": "AI Search Growth - US Multi Industry | 1-10", "segment": "Multi-industry owners, 1\u201310 employees, all US time zones", "window": "1:00\u20135:00 PM ET \u00b7 Jul 23", "sent": 1994, "opens": 1314, "replies": 9, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 6, 2026", "openRate": 65.89769307923771, "replyRate": 0.4513540621865597}, {"name": "US Dentist Clinics | Owners | 1\u201320 | ET CT", "segment": "Dental practice/clinic owners, 1\u201320 employees", "window": "1:00\u20135:00 PM ET \u00b7 Jul 24", "sent": 1415, "opens": 1024, "replies": 3, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 18, 2026", "openRate": 72.36749116607774, "replyRate": 0.21201413427561835}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Catch-All", "segment": "CT home-services owners, 1\u201310 employees, catch-all list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 1601, "opens": 441, "replies": 8, "dnc": 0, "interested": 1, "opportunities": 1, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 27.545284197376642, "replyRate": 0.49968769519050593}, {"name": "LP+ SEO | (CT) Home Services | 1-10 | Valid", "segment": "CT home-services owners, 1\u201310 employees, verified-valid list", "window": "9:30 AM\u20131:00 PM CT \u00b7 Jul 21", "sent": 2868, "opens": 1300, "replies": 10, "dnc": 1, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 20, 2026", "openRate": 45.32775453277546, "replyRate": 0.3486750348675035}, {"name": "$100 LP | EST | Home Services | 1-10 | Catch-All", "segment": "ET home-services owners, 1\u201310 employees, catch-all list", "window": "9:00 AM\u20131:00 PM ET \u00b7 Jul 21", "sent": 1355, "opens": 737, "replies": 8, "dnc": 2, "interested": 0, "opportunities": 0, "meetings": 0, "status": "Complete", "completed": "Aug 22, 2026", "openRate": 54.39114391143911, "replyRate": 0.5904059040590406}], "overrides": {"sent": 22222, "openRate": 55}, "title": "Dabaran Cold Outreach Report", "subtitle": "Seven prospecting sends across home services, dental, and multi-industry lists \u2014 July 21\u201324, 2026 launch window."}], "lastSaved": "2026-09-11T21:02:04.203Z"};
+  var STATE = (function () {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) { return JSON.parse(raw); }
+    } catch (e) { /* localStorage unavailable (e.g. file:// in some browsers) - fall back below */ }
+    return DEFAULT_STATE;
+  })();
+
+  var campaigns = STATE.campaigns;
+  STATE.overrides = STATE.overrides || {};
+  STATE.history = Array.isArray(STATE.history) ? STATE.history : [];
+  var dirty = false;
+  // A "?report=1" (or "#report") link opens this same saved document in a locked, no-editing
+  // view — since it's the same page and the same STATE, whatever gets saved here shows there
+  // too, automatically, with no separate publish step. Hash is checked too because some hosts
+  // don't forward query strings through to the served page, but a URL fragment always survives
+  // (it's never sent to the server, so nothing server-side can strip it).
+  var isReportMode = /(^|[?&])report=1(&|$)/.test(window.location.search) || /report/i.test(window.location.hash);
+
+  function fmt(n) { return (Math.round(n * 100) / 100).toLocaleString("en-US"); }
+  function pct(n, d) { d = d === undefined ? 2 : d; if (!isFinite(n)) n = 0; return n.toFixed(d) + "%"; }
+  function num(v) { var n = parseFloat(v); return isFinite(n) && n >= 0 ? n : 0; }
+
+  function formatByKind(kind, n) {
+    if (kind === "pct1") return pct(n, 1);
+    if (kind === "pct2") return pct(n, 2);
+    return fmt(n);
+  }
+  function parseByKind(kind, text) {
+    var cleaned = String(text).replace(/[^0-9.]/g, "");
+    var n = parseFloat(cleaned);
+    if (!isFinite(n) || n < 0) n = 0;
+    if (kind !== "pct1" && kind !== "pct2") n = Math.round(n);
+    return n;
+  }
+
+  function recalcRates() {
+    campaigns.forEach(function (c) {
+      c.sent = Math.round(num(c.sent));
+      c.opens = Math.round(num(c.opens));
+      c.replies = Math.round(num(c.replies));
+      c.dnc = Math.round(num(c.dnc));
+      c.interested = Math.round(num(c.interested));
+      c.opportunities = Math.round(num(c.opportunities));
+      c.meetings = Math.round(num(c.meetings));
+      c.openRate = c.sent > 0 ? (c.opens / c.sent * 100) : 0;
+      c.replyRate = c.sent > 0 ? (c.replies / c.sent * 100) : 0;
+    });
+  }
+
+  function totals() {
+    var t = campaigns.reduce(function (a, c) {
+      a.sent += c.sent; a.opens += c.opens; a.dnc += c.dnc; a.replies += c.replies;
+      a.interested += c.interested; a.opportunities += c.opportunities;
+      return a;
+    }, { sent: 0, opens: 0, dnc: 0, replies: 0, interested: 0, opportunities: 0 });
+    t.openRate = t.sent > 0 ? (t.opens / t.sent * 100) : 0;
+    t.replyRate = t.sent > 0 ? (t.replies / t.sent * 100) : 0;
+    return t;
+  }
+
+  function pillClassFor(status) {
+    if (status === "Complete") return "good";
+    if (status === "Continue for Sending") return "warn";
+    return "neutral";
+  }
+
+  var tip = document.getElementById("tip");
+  function showTip(evt, html) {
+    tip.innerHTML = html;
+    tip.style.left = evt.clientX + "px";
+    tip.style.top = evt.clientY + "px";
+    tip.classList.add("show");
+  }
+  function hideTip() { tip.classList.remove("show"); }
+
+  // ---------- Save history (a running log — one entry per successful save, each openable) ----------
+  function formatWhen(iso) {
+    return iso
+      ? new Date(iso).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit", second: "2-digit" })
+      : "Unknown time";
+  }
+
+  function renderSaveHistory() {
+    var list = document.getElementById("saveHistoryList");
+    var empty = document.getElementById("saveHistoryEmpty");
+    var history = Array.isArray(STATE.history) ? STATE.history : [];
+    list.innerHTML = "";
+    if (!history.length) {
+      empty.style.display = "";
+      return;
+    }
+    empty.style.display = "none";
+    history.slice().reverse().forEach(function (entry, i) {
+      var saveNumber = history.length - i;
+      var li = document.createElement("li");
+      li.className = "clickable";
+      li.tabIndex = 0;
+      li.dataset.historyIndex = String(history.length - 1 - i);
+      li.innerHTML = "<span>Save #" + saveNumber + "</span>" +
+        "<span class=\"row-right\"><span class=\"save-view-hint\">Open \u2197</span><span class=\"when\">" + formatWhen(entry && entry.savedAt) + "</span>" +
+        "<button type=\"button\" class=\"history-open-btn\" data-history-index=\"" + (history.length - 1 - i) + "\" title=\"Open this saved version in a new tab\">\u21d7</button>" +
+        "<button type=\"button\" class=\"history-del-btn\" data-history-index=\"" + (history.length - 1 - i) + "\" title=\"Delete this saved version\">&times;</button></span>";
+      list.appendChild(li);
+    });
+  }
+
+  function renderHistorySnapshot(entry) {
+    var body = document.getElementById("historyModalBody");
+    if (!entry || !Array.isArray(entry.campaigns)) {
+      body.innerHTML = "<p class=\"no-snapshot\">This save was recorded before version snapshots were turned on, so there's no saved dashboard to show for it \u2014 only the save time. Every save from now on keeps the full dashboard, so it can always be reopened later.</p>";
+      return;
+    }
+    var sections = buildSnapshotSectionsHtml(entry);
+    body.innerHTML = sections.kpiHtml + sections.panelsHtml + sections.tableHtml;
+  }
+
+  function buildSnapshotSectionsHtml(entry) {
+    var snapCampaigns = entry.campaigns;
+    var snapOverrides = entry.overrides || {};
+
+    var t = snapCampaigns.reduce(function (a, c) {
+      a.sent += num(c.sent); a.opens += num(c.opens); a.replies += num(c.replies); a.dnc += num(c.dnc);
+      a.interested += num(c.interested); a.opportunities += num(c.opportunities);
+      return a;
+    }, { sent: 0, opens: 0, replies: 0, dnc: 0, interested: 0, opportunities: 0 });
+    var meetings = snapCampaigns.reduce(function (a, c) { return a + (c.meetings || 0); }, 0);
+    var openRateTotal = t.sent > 0 ? (t.opens / t.sent * 100) : 0;
+    var replyRateTotal = t.sent > 0 ? (t.replies / t.sent * 100) : 0;
+
+    // ---- Program totals (same KPI tiles as the live dashboard, honoring any manual overrides) ----
+    var kpiDefs = [
+      { label: "Contacts sent", val: fmt(snapOverrides.sent !== undefined ? snapOverrides.sent : t.sent), unit: "across " + snapCampaigns.length + " sends" },
+      { label: "Open rate", val: pct(snapOverrides.openRate !== undefined ? snapOverrides.openRate : openRateTotal, 1), unit: fmt(t.opens) + " opened" },
+      { label: "Reply rate", val: pct(snapOverrides.replyRate !== undefined ? snapOverrides.replyRate : replyRateTotal, 2), unit: fmt(t.replies) + " replies" },
+      { label: "Interested replies", val: fmt(snapOverrides.interested !== undefined ? snapOverrides.interested : t.interested), unit: "of " + fmt(t.replies) + " replies" },
+      { label: "Opportunities created", val: fmt(snapOverrides.opportunities !== undefined ? snapOverrides.opportunities : t.opportunities), unit: t.opportunities + " campaign" + (t.opportunities === 1 ? "" : "s") },
+      { label: "Meetings booked", val: fmt(snapOverrides.meetings !== undefined ? snapOverrides.meetings : meetings), unit: meetings > 0 ? "booked to date" : "none yet this cycle" }
+    ];
+    var kpiHtml = '<p class="eyebrow">Program totals</p><div class="kpi-grid">' + kpiDefs.map(function (k) {
+      return '<div class="kpi"><div class="label">' + k.label + '</div><div class="value-row"><span class="value" style="cursor:default">' + k.val + '</span></div><div class="caption">' + k.unit + '</div></div>';
+    }).join("") + '</div>';
+
+    // ---- Open rate by campaign (same bar chart as the live dashboard) ----
+    var sorted = snapCampaigns.map(function (c) {
+      var sent = num(c.sent), opens = num(c.opens);
+      return { name: c.name, sent: sent, opens: opens, openRate: sent > 0 ? (opens / sent * 100) : 0 };
+    }).sort(function (a, b) { return b.openRate - a.openRate; });
+    var maxRate = Math.max.apply(null, sorted.map(function (c) { return c.openRate; })) || 1;
+    var barHtml = sorted.map(function (c) {
+      var widthPct = (c.openRate / maxRate) * 100;
+      return '<div class="bar-row"><div class="name" title="' + escAttr(c.name) + '">' + (c.name || "Untitled") + '</div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + widthPct.toFixed(1) + '%"></div></div>' +
+        '<div class="pct">' + pct(c.openRate, 1) + '</div></div>';
+    }).join("");
+
+    // ---- Funnel (same 5-stage funnel as the live dashboard) ----
+    var stages = [
+      { stage: "Sent", value: t.sent, color: "var(--seq-1)" },
+      { stage: "Opened", value: t.opens, color: "var(--seq-2)" },
+      { stage: "Replied", value: t.replies, color: "var(--seq-3)" },
+      { stage: "Interested", value: t.interested, color: "var(--seq-4)" },
+      { stage: "Opportunity", value: t.opportunities, color: "var(--seq-5)" }
+    ];
+    var sqrtMax = Math.sqrt(stages[0].value) || 1;
+    var funnelHtml = stages.map(function (s, i) {
+      var w = Math.max((Math.sqrt(s.value) / sqrtMax) * 100, 3);
+      var pctOfSent = t.sent > 0 ? (s.value / t.sent * 100) : 0;
+      var pctLabel = pctOfSent >= 1 ? pctOfSent.toFixed(1) + "%" : pctOfSent.toFixed(3) + "%";
+      var dropHtml = "";
+      if (i > 0) {
+        var prev = stages[i - 1];
+        var convFromPrev = prev.value > 0 ? (s.value / prev.value * 100) : 0;
+        var dropText = prev.stage === "Sent" ? (pctLabel + " of total sent") : (convFromPrev.toFixed(convFromPrev < 1 ? 2 : 1) + "% of " + prev.stage.toLowerCase() + " \u00b7 " + pctLabel + " of total sent");
+        dropHtml = '<div class="funnel-drop">' + dropText + '</div>';
+      }
+      return '<div class="funnel-row"><div class="stage">' + s.stage + '</div><div class="funnel-track"><div class="funnel-fill" style="width:' + w.toFixed(1) + '%;background:' + s.color + '"></div></div><div class="count">' + fmt(s.value) + '</div></div>' + dropHtml;
+    }).join("");
+
+    var panelsHtml = '<div class="panels">' +
+      '<div class="panel"><h2>Open rate by campaign</h2><p class="panel-sub">Opens \u00f7 total sent, ranked high to low</p>' + barHtml + '</div>' +
+      '<div class="panel"><h2>Where the funnel narrows</h2><p class="panel-sub">All campaigns combined, sent \u2192 opportunity</p><div class="funnel">' + funnelHtml + '</div></div>' +
+      '</div>';
+
+    // ---- Full campaign table (every column, read-only) ----
+    var rowsHtml = snapCampaigns.map(function (c) {
+      var sent = num(c.sent), opens = num(c.opens), replies = num(c.replies);
+      var oRate = sent > 0 ? (opens / sent * 100) : 0;
+      var rRate = sent > 0 ? (replies / sent * 100) : 0;
+      return '<tr>' +
+        '<td><span style="font-weight:600">' + escAttr(c.name || "Untitled") + '</span>' + (c.segment ? '<span style="display:block;color:var(--ink-muted);font-size:11px">' + escAttr(c.segment) + '</span>' : '') + '</td>' +
+        '<td>' + escAttr(c.window || "") + '</td>' +
+        '<td class="num">' + fmt(sent) + '</td>' +
+        '<td class="num">' + fmt(opens) + ' <span style="color:var(--ink-muted)">(' + pct(oRate, 1) + ')</span></td>' +
+        '<td class="num">' + fmt(replies) + ' <span style="color:var(--ink-muted)">(' + pct(rRate, 2) + ')</span></td>' +
+        '<td class="num">' + fmt(num(c.dnc)) + '</td>' +
+        '<td class="num">' + fmt(num(c.interested)) + '</td>' +
+        '<td class="num">' + fmt(num(c.opportunities)) + '</td>' +
+        '<td class="num">' + fmt(num(c.meetings || 0)) + '</td>' +
+        '<td><span class="pill ' + pillClassFor(c.status) + '"><span class="dot"></span>' + escAttr(c.status || "") + '</span></td>' +
+        '<td>' + escAttr(c.completed || "") + '</td>' +
+        '</tr>';
+    }).join("");
+
+    var tableHtml = '<p class="eyebrow">Campaign detail</p><div class="table-panel"><div class="table-scroll"><table><thead><tr>' +
+      '<th>Campaign</th><th>Send window</th><th class="num">Sent</th><th class="num">Opened</th><th class="num">Replied</th><th class="num">DNC</th><th class="num">Interested</th><th class="num">Opps</th><th class="num">Meetings</th><th>Status</th><th>Completed</th>' +
+      '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div></div>';
+
+    return { kpiHtml: kpiHtml, panelsHtml: panelsHtml, tableHtml: tableHtml };
+  }
+
+  function buildHistoryStandaloneDoc(entry, index) {
+    var titleText = (typeof entry.title === "string" && entry.title) ? entry.title : STATE.title;
+    var subtitleText = (typeof entry.subtitle === "string") ? entry.subtitle : STATE.subtitle;
+    var styleTag = document.querySelector("style");
+    var css = styleTag ? styleTag.outerHTML : "";
+    var fontLinks = '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+      '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
+      '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">';
+    var bodyInner;
+    if (!entry || !Array.isArray(entry.campaigns)) {
+      bodyInner = '<div class="wrap"><div class="masthead"><div><h1>' + escAttr(titleText) + '</h1><p class="sub">' + escAttr(subtitleText) + '</p></div></div>' +
+        '<p class="no-snapshot" style="margin-top:20px">This save was recorded before version snapshots were turned on, so there is no saved dashboard to show for it \u2014 only the save time.</p></div>';
+    } else {
+      var sections = buildSnapshotSectionsHtml(entry);
+      bodyInner = '<div class="wrap"><div class="masthead"><div><h1>' + escAttr(titleText) + '</h1><p class="sub">' + escAttr(subtitleText) + '</p></div>' +
+        '<div class="meta">Dabaran &middot; Outbound Lead Gen<br><span class="n">' + entry.campaigns.length + '</span> campaigns &middot; Save #' + (index + 1) + '<br>Saved ' + formatWhen(entry.savedAt) + '</div></div>' +
+        sections.kpiHtml + sections.panelsHtml + sections.tableHtml + '</div>';
+    }
+    return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">' +
+      '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+      '<title>Save #' + (index + 1) + ' \u2014 ' + escAttr(titleText) + '</title>' +
+      fontLinks + css + '</head><body>' + bodyInner + '</body></html>';
+  }
+
+  function openHistoryStandaloneTab(index) {
+    try {
+      var history = Array.isArray(STATE.history) ? STATE.history : [];
+      var entry = history[index];
+      if (!entry) return;
+      var win = window.open("", "_blank");
+      if (!win || !win.document) {
+        try { alert("Naya tab open nahi ho saka is view mein \u2014 popups allow karke dobara try karein."); } catch (e2) {}
+        return;
+      }
+      var docHtml = buildHistoryStandaloneDoc(entry, index);
+      win.document.open();
+      win.document.write(docHtml);
+      win.document.close();
+    } catch (err) {
+      try { alert("Naya tab open nahi ho saka is view mein."); } catch (e2) {}
+    }
+  }
+
+  var historyModalOverlay = document.getElementById("historyModalOverlay");
+  var historyModalRestoreBtn = document.getElementById("historyModalRestore");
+  var historyModalDeleteBtn = document.getElementById("historyModalDelete");
+  var historyModalOpenTabBtn = document.getElementById("historyModalOpenTab");
+  var activeHistoryEntry = null;
+  var activeHistoryIndex = null;
+
+  function deleteHistoryEntry(index) {
+    var history = Array.isArray(STATE.history) ? STATE.history : [];
+    if (index < 0 || index >= history.length) return;
+    history.splice(index, 1);
+    renderSaveHistory();
+    markDirty();
+  }
+
+  function openHistoryModal(index) {
+    var history = Array.isArray(STATE.history) ? STATE.history : [];
+    var entry = history[index];
+    if (!entry) return;
+    activeHistoryEntry = entry;
+    activeHistoryIndex = index;
+    document.getElementById("historyModalTitle").textContent = "Save #" + (index + 1);
+    document.getElementById("historyModalWhen").textContent = "Saved " + formatWhen(entry.savedAt);
+    renderHistorySnapshot(entry);
+    historyModalRestoreBtn.style.display = Array.isArray(entry.campaigns) && !isReportMode ? "" : "none";
+    historyModalDeleteBtn.style.display = isReportMode ? "none" : "";
+    historyModalOverlay.hidden = false;
+  }
+
+  function closeHistoryModal() {
+    historyModalOverlay.hidden = true;
+    activeHistoryEntry = null;
+    activeHistoryIndex = null;
+  }
+
+  document.getElementById("saveHistoryList").addEventListener("click", function (e) {
+    var delBtn = e.target.closest(".history-del-btn");
+    if (delBtn) {
+      deleteHistoryEntry(Number(delBtn.dataset.historyIndex));
+      return;
+    }
+    var openBtn = e.target.closest(".history-open-btn");
+    if (openBtn) {
+      openHistoryStandaloneTab(Number(openBtn.dataset.historyIndex));
+      return;
+    }
+    var li = e.target.closest("li[data-history-index]");
+    if (!li) return;
+    openHistoryModal(Number(li.dataset.historyIndex));
+  });
+  document.getElementById("saveHistoryList").addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    if (e.target.closest(".history-del-btn") || e.target.closest(".history-open-btn")) return;
+    var li = e.target.closest("li[data-history-index]");
+    if (!li) return;
+    e.preventDefault();
+    openHistoryModal(Number(li.dataset.historyIndex));
+  });
+  document.getElementById("historyModalClose").addEventListener("click", function () { closeHistoryModal(); });
+  historyModalOpenTabBtn.addEventListener("click", function () {
+    if (activeHistoryIndex === null) return;
+    openHistoryStandaloneTab(activeHistoryIndex);
+  });
+  historyModalDeleteBtn.addEventListener("click", function () {
+    if (activeHistoryIndex === null) return;
+    deleteHistoryEntry(activeHistoryIndex);
+    persistState({ campaigns: campaigns, overrides: STATE.overrides, title: STATE.title, subtitle: STATE.subtitle, history: STATE.history, lastSaved: STATE.lastSaved });
+    closeHistoryModal();
+  });
+  historyModalOverlay.addEventListener("click", function (e) {
+    if (e.target === historyModalOverlay) closeHistoryModal();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !historyModalOverlay.hidden) closeHistoryModal();
+  });
+  historyModalRestoreBtn.addEventListener("click", function () {
+    if (!activeHistoryEntry || !Array.isArray(activeHistoryEntry.campaigns)) return;
+    campaigns.length = 0;
+    JSON.parse(JSON.stringify(activeHistoryEntry.campaigns)).forEach(function (c) { campaigns.push(c); });
+    STATE.overrides = JSON.parse(JSON.stringify(activeHistoryEntry.overrides || {}));
+    if (typeof activeHistoryEntry.title === "string") { STATE.title = activeHistoryEntry.title; titleEl.textContent = STATE.title; }
+    if (typeof activeHistoryEntry.subtitle === "string") { STATE.subtitle = activeHistoryEntry.subtitle; subtitleEl.textContent = STATE.subtitle; }
+    renderTable();
+    renderDerived();
+    markDirty();
+    persistState({ campaigns: campaigns, overrides: STATE.overrides, title: STATE.title, subtitle: STATE.subtitle, history: STATE.history, lastSaved: STATE.lastSaved });
+    closeHistoryModal();
+  });
+  // ---------- Derived sections (KPI / chart / funnel / masthead meta) ----------
+  function renderDerived() {
+    recalcRates();
+    var t = totals();
+    var meetings = campaigns.reduce(function (a, c) { return a + (c.meetings || 0); }, 0);
+
+    document.getElementById("campaignCount").textContent = campaigns.length;
+    var complete = campaigns.filter(function (c) { return c.status === "Complete"; }).length;
+    document.getElementById("statusSummary").textContent = complete + " complete, " + (campaigns.length - complete) + " in progress";
+    document.getElementById("lastSavedLine").textContent = STATE.lastSaved
+      ? "Last saved " + new Date(STATE.lastSaved).toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" })
+      : "Not yet saved";
+
+    // KPI tiles — each has a computed value but can be overridden by typing directly into it
+    var kpis = [
+      { label: "Contacts sent", overrideKey: "sent", kind: "count", raw: t.sent, unit: "across " + campaigns.length + " sends", key: "sent" },
+      { label: "Open rate", overrideKey: "openRate", kind: "pct1", raw: t.openRate, unit: fmt(t.opens) + " opened", key: "openRate" },
+      { label: "Reply rate", overrideKey: "replyRate", kind: "pct2", raw: t.replyRate, unit: fmt(t.replies) + " replies", key: "replyRate" },
+      { label: "Interested replies", overrideKey: "interested", kind: "count", raw: t.interested, unit: "of " + fmt(t.replies) + " replies", key: "interested" },
+      { label: "Opportunities created", overrideKey: "opportunities", kind: "count", raw: t.opportunities, unit: t.opportunities + " campaign" + (t.opportunities === 1 ? "" : "s") + " converted", key: "opportunities" },
+      { label: "Meetings booked", overrideKey: "meetings", kind: "count", raw: meetings, unit: meetings > 0 ? "booked to date" : "none yet this cycle", flatWhenZero: true, key: "meetings" }
+    ];
+    var kpiGrid = document.getElementById("kpiGrid");
+    kpiGrid.innerHTML = "";
+    kpis.forEach(function (k) {
+      var tile = document.createElement("div");
+      tile.className = "kpi";
+      var sparkSvg = "";
+      if (k.key) {
+        var vals = campaigns.map(function (c) { return c[k.key]; });
+        var max = Math.max.apply(null, vals) || 1;
+        var w = 100 / vals.length;
+        var bars = vals.map(function (v, i) {
+          var h = Math.max((v / max) * 22, v > 0 ? 2 : 1);
+          var cls = v > 0 ? "" : "zero";
+          return '<rect class="' + cls + '" x="' + (i * w + w * 0.15).toFixed(2) + '%" y="' + (26 - h).toFixed(1) +
+                 '" width="' + (w * 0.7).toFixed(2) + '%" height="' + h.toFixed(1) + '" rx="1.5"></rect>';
+        }).join("");
+        sparkSvg = '<svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none">' + bars + '</svg>';
+      }
+      var hasOverride = STATE.overrides[k.overrideKey] !== undefined && STATE.overrides[k.overrideKey] !== null;
+      var displayNum = hasOverride ? STATE.overrides[k.overrideKey] : k.raw;
+      var flat = k.flatWhenZero && !hasOverride && displayNum === 0;
+      var valueSpan = isReportMode
+        ? '<span class="value" style="cursor:default">' + formatByKind(k.kind, displayNum) + '</span>'
+        : '<span class="value" contenteditable="true" spellcheck="false" data-override-key="' + k.overrideKey + '" data-kind="' + k.kind + '" data-raw="' + displayNum + '" title="Click to type in a number directly">' + formatByKind(k.kind, displayNum) + '</span>';
+      tile.innerHTML =
+        '<div class="label">' + k.label + '</div>' +
+        '<div class="value-row">' +
+          valueSpan +
+          (hasOverride && !isReportMode ? '<button type="button" class="reset-btn" data-override-key="' + k.overrideKey + '" title="Recalculate from campaign data">&#8635;</button>' : '') +
+        '</div>' +
+        '<div class="caption' + (flat ? ' flat' : '') + '">' + (hasOverride ? (isReportMode ? "reported figure" : "set manually") : k.unit) + '</div>' +
+        sparkSvg;
+      kpiGrid.appendChild(tile);
+    });
+
+    // Bar chart
+    var barChart = document.getElementById("barChart");
+    barChart.innerHTML = "";
+    var sorted = campaigns.slice().sort(function (a, b) { return b.openRate - a.openRate; });
+    var maxRate = Math.max.apply(null, sorted.map(function (c) { return c.openRate; })) || 1;
+    sorted.forEach(function (c) {
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      var widthPct = (c.openRate / maxRate) * 100;
+      row.innerHTML =
+        '<div class="name" title="' + (c.name || "").replace(/"/g, "&quot;") + '">' + (c.name || "Untitled") + '</div>' +
+        '<div class="bar-track"><div class="bar-fill" tabindex="0" style="width:' + widthPct.toFixed(1) + '%"></div></div>' +
+        '<div class="pct">' + pct(c.openRate, 1) + '</div>';
+      var fill = row.querySelector(".bar-fill");
+      var html = '<b>' + c.name + '</b><br>' + fmt(c.opens) + ' opened of ' + fmt(c.sent) + ' sent<br>' + pct(c.openRate, 2) + ' open rate';
+      fill.addEventListener("mouseenter", function (e) { showTip(e, html); });
+      fill.addEventListener("mousemove", function (e) { showTip(e, html); });
+      fill.addEventListener("mouseleave", hideTip);
+      barChart.appendChild(row);
+    });
+
+    // Funnel
+    var stages = [
+      { stage: "Sent", value: t.sent, color: "var(--seq-1)" },
+      { stage: "Opened", value: t.opens, color: "var(--seq-2)" },
+      { stage: "Replied", value: t.replies, color: "var(--seq-3)" },
+      { stage: "Interested", value: t.interested, color: "var(--seq-4)" },
+      { stage: "Opportunity", value: t.opportunities, color: "var(--seq-5)" }
+    ];
+    var funnel = document.getElementById("funnel");
+    funnel.innerHTML = "";
+    var sqrtMax = Math.sqrt(stages[0].value) || 1;
+    stages.forEach(function (s, i) {
+      var row = document.createElement("div");
+      row.className = "funnel-row";
+      var w = Math.max((Math.sqrt(s.value) / sqrtMax) * 100, 3);
+      var pctOfSent = t.sent > 0 ? (s.value / t.sent * 100) : 0;
+      var pctLabel = pctOfSent >= 1 ? pctOfSent.toFixed(1) + "%" : pctOfSent.toFixed(3) + "%";
+      row.innerHTML =
+        '<div class="stage">' + s.stage + '</div>' +
+        '<div class="funnel-track"><div class="funnel-fill" tabindex="0" style="width:' + w.toFixed(1) + '%;background:' + s.color + '"></div></div>' +
+        '<div class="count">' + fmt(s.value) + '</div>';
+      funnel.appendChild(row);
+      if (i > 0) {
+        var prev = stages[i - 1];
+        var drop = document.createElement("div");
+        drop.className = "funnel-drop";
+        var convFromPrev = prev.value > 0 ? (s.value / prev.value * 100) : 0;
+        drop.textContent = prev.stage === "Sent"
+          ? pctLabel + " of total sent"
+          : convFromPrev.toFixed(convFromPrev < 1 ? 2 : 1) + "% of " + prev.stage.toLowerCase() + " · " + pctLabel + " of total sent";
+        funnel.appendChild(drop);
+      }
+      var fill = row.querySelector(".funnel-fill");
+      var html = '<b>' + fmt(s.value) + '</b> ' + s.stage.toLowerCase() + '<br>' + pctLabel + ' of total sent';
+      fill.addEventListener("mouseenter", function (e) { showTip(e, html); });
+      fill.addEventListener("mousemove", function (e) { showTip(e, html); });
+      fill.addEventListener("mouseleave", hideTip);
+    });
+  }
+
+  // ---------- Table (rebuilt only on add/remove, not on every keystroke) ----------
+  function renderTable() {
+    recalcRates();
+    var tbody = document.getElementById("campTbody");
+    tbody.innerHTML = "";
+
+    if (isReportMode) {
+      campaigns.forEach(function (c) {
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          '<td><span class="camp-name" style="font-weight:600">' + escAttr(c.name) + '</span><span class="segment-input" style="display:block">' + escAttr(c.segment) + '</span></td>' +
+          '<td>' + escAttr(c.window) + '</td>' +
+          '<td class="num mono">' + fmt(c.sent) + '</td>' +
+          '<td class="num mono">' + fmt(c.opens) + ' <span style="color:var(--ink-muted)">(' + pct(c.openRate, 1) + ')</span></td>' +
+          '<td class="num mono">' + fmt(c.replies) + ' <span style="color:var(--ink-muted)">(' + pct(c.replyRate, 2) + ')</span></td>' +
+          '<td class="num mono">' + fmt(c.dnc) + '</td>' +
+          '<td class="num mono">' + fmt(c.interested) + '</td>' +
+          '<td class="num mono">' + fmt(c.opportunities) + '</td>' +
+          '<td class="num mono">' + fmt(c.meetings || 0) + '</td>' +
+          '<td><span class="pill ' + pillClassFor(c.status) + '"><span class="dot"></span>' + escAttr(c.status) + '</span></td>' +
+          '<td class="mono">' + escAttr(c.completed) + '</td>' +
+          '<td></td>';
+        tbody.appendChild(tr);
+      });
+      return;
+    }
+
+    campaigns.forEach(function (c, i) {
+      var tr = document.createElement("tr");
+      tr.dataset.index = i;
+      tr.innerHTML =
+        '<td>' +
+          '<input class="cell-input name-input" data-field="name" value="' + escAttr(c.name) + '" title="' + escAttr(c.name) + '" placeholder="Campaign name">' +
+          '<input class="cell-input segment-input" data-field="segment" value="' + escAttr(c.segment) + '" title="' + escAttr(c.segment) + '" placeholder="Segment / list">' +
+        '</td>' +
+        '<td><input class="cell-input" data-field="window" value="' + escAttr(c.window) + '" placeholder="Send window"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="sent" value="' + c.sent + '"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="opens" value="' + c.opens + '"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="replies" value="' + c.replies + '"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="dnc" value="' + c.dnc + '"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="interested" value="' + c.interested + '"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="opportunities" value="' + c.opportunities + '"></td>' +
+        '<td class="num"><input class="cell-input" type="number" min="0" step="1" data-field="meetings" value="' + (c.meetings || 0) + '"></td>' +
+        '<td>' +
+          '<span class="status-cell">' +
+            '<span class="pill ' + pillClassFor(c.status) + '"><span class="dot"></span>' + c.status + '</span>' +
+            '<select class="cell-input" data-field="status">' +
+              ["Complete", "Continue for Sending", "Paused", "Not started"].map(function (opt) {
+                return '<option' + (opt === c.status ? ' selected' : '') + '>' + opt + '</option>';
+              }).join("") +
+            '</select>' +
+          '</span>' +
+        '</td>' +
+        '<td><input class="cell-input" data-field="completed" value="' + escAttr(c.completed) + '" placeholder="—"></td>' +
+        '<td><button class="del-btn" type="button" title="Remove campaign">&times;</button></td>';
+      tr.querySelector(".del-btn").addEventListener("click", function () {
+        campaigns.splice(i, 1);
+        renderTable();
+        renderDerived();
+        markDirty();
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function escAttr(s) { return (s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+  // Delegated input handling — updates state without rebuilding the table (keeps focus)
+  document.getElementById("campTbody").addEventListener("input", function (e) {
+    var field = e.target.dataset.field;
+    if (!field) return;
+    var tr = e.target.closest("tr");
+    var idx = Number(tr.dataset.index);
+    var c = campaigns[idx];
+    if (["sent", "opens", "replies", "dnc", "interested", "opportunities", "meetings"].indexOf(field) !== -1) {
+      c[field] = num(e.target.value);
+    } else {
+      c[field] = e.target.value;
+      e.target.title = e.target.value;
+    }
+    if (field === "status") {
+      var pill = tr.querySelector(".pill");
+      pill.className = "pill " + pillClassFor(c.status);
+      pill.innerHTML = '<span class="dot"></span>' + c.status;
+    }
+    renderDerived();
+    markDirty();
+  });
+
+  document.getElementById("addBtn").addEventListener("click", function () {
+    campaigns.push({
+      name: "New campaign", segment: "", window: "",
+      sent: 0, opens: 0, replies: 0, dnc: 0, interested: 0, opportunities: 0, meetings: 0,
+      status: "Not started", completed: "—"
+    });
+    renderTable();
+    renderDerived();
+    markDirty();
+    var rows = document.querySelectorAll("#campTbody tr");
+    var last = rows[rows.length - 1];
+    if (last) last.querySelector('[data-field="name"]').focus();
+  });
+
+  // ---------- KPI tile overrides (click a headline number to type your own) ----------
+  var kpiGridEl = document.getElementById("kpiGrid");
+
+  function selectAllText(el) {
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  // focus/blur don't bubble — use the capture phase
+  kpiGridEl.addEventListener("focus", function (e) {
+    if (!e.target.classList || !e.target.classList.contains("value")) return;
+    e.target.textContent = e.target.dataset.raw;
+    selectAllText(e.target);
+  }, true);
+
+  kpiGridEl.addEventListener("blur", function (e) {
+    if (!e.target.classList || !e.target.classList.contains("value")) return;
+    if (e.target.dataset.canceled === "1") {
+      delete e.target.dataset.canceled;
+      renderDerived();
+      return;
+    }
+    var key = e.target.dataset.overrideKey;
+    var kind = e.target.dataset.kind;
+    var n = parseByKind(kind, e.target.textContent);
+    STATE.overrides[key] = n;
+    markDirty();
+    renderDerived();
+  }, true);
+
+  kpiGridEl.addEventListener("keydown", function (e) {
+    if (!e.target.classList || !e.target.classList.contains("value")) return;
+    if (e.key === "Enter") { e.preventDefault(); e.target.blur(); }
+    if (e.key === "Escape") { e.preventDefault(); e.target.dataset.canceled = "1"; e.target.blur(); }
+  });
+
+  kpiGridEl.addEventListener("click", function (e) {
+    if (!e.target.classList || !e.target.classList.contains("reset-btn")) return;
+    var key = e.target.dataset.overrideKey;
+    delete STATE.overrides[key];
+    markDirty();
+    renderDerived();
+  });
+
+  // ---------- Title & subtitle (editable heading) ----------
+  var titleEl = document.getElementById("reportTitle");
+  var subtitleEl = document.getElementById("reportSubtitle");
+  if (typeof STATE.title === "string" && STATE.title) { titleEl.textContent = STATE.title; }
+  if (typeof STATE.subtitle === "string") { subtitleEl.textContent = STATE.subtitle; }
+  [titleEl, subtitleEl].forEach(function (el) {
+    el.addEventListener("blur", function () {
+      var text = el.textContent.replace(/\s+/g, " ").trim();
+      if (el === titleEl) { STATE.title = text || "Untitled report"; el.textContent = STATE.title; }
+      else { STATE.subtitle = text; el.textContent = STATE.subtitle; }
+      markDirty();
+    });
+    el.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); el.blur(); }
+    });
+  });
+
+  // ---------- Save / publish ----------
+  var saveStatusEl = document.getElementById("saveStatus");
+  var saveStatusText = document.getElementById("saveStatusText");
+  var saveBtn = document.getElementById("saveBtn");
+
+  function markDirty() {
+    dirty = true;
+    saveStatusEl.className = "save-status dirty";
+    saveStatusText.textContent = "Unsaved changes";
+  }
+  function markSaved() {
+    dirty = false;
+    saveStatusEl.className = "save-status saved";
+    saveStatusText.textContent = "All changes saved";
+  }
+  function markError(msg) {
+    saveStatusEl.className = "save-status error";
+    saveStatusText.textContent = msg;
+  }
+
+  saveBtn.addEventListener("click", function () {
+    saveChanges();
+  });
+
+  function persistState(newState) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function saveChanges() {
+    saveBtn.disabled = true;
+    saveStatusEl.className = "save-status";
+    saveStatusText.textContent = "Saving…";
+    var nowIso = new Date().toISOString();
+    var snapshot = {
+      savedAt: nowIso,
+      campaigns: JSON.parse(JSON.stringify(campaigns)),
+      overrides: JSON.parse(JSON.stringify(STATE.overrides)),
+      title: STATE.title,
+      subtitle: STATE.subtitle
+    };
+    var newHistory = (Array.isArray(STATE.history) ? STATE.history : []).concat([snapshot]);
+    if (newHistory.length > 150) { newHistory = newHistory.slice(newHistory.length - 150); }
+    var newState = { campaigns: campaigns, overrides: STATE.overrides, title: STATE.title, subtitle: STATE.subtitle, history: newHistory, lastSaved: nowIso };
+    var ok = persistState(newState);
+    saveBtn.disabled = false;
+    if (!ok) {
+      markError("Couldn't save to this browser's local storage — try again, or check it isn't full/blocked.");
+      return;
+    }
+    STATE = newState;
+    renderSaveHistory();
+    markSaved();
+  }
+
+  // ---------- Init ----------
+  if (isReportMode) {
+    document.getElementById("saveBar").style.display = "none";
+    document.getElementById("tableFoot").style.display = "none";
+    document.getElementById("tableEyebrow").textContent = "Campaign detail";
+    document.getElementById("reportTitle").removeAttribute("contenteditable");
+    document.getElementById("reportTitle").removeAttribute("title");
+    document.getElementById("reportSubtitle").removeAttribute("contenteditable");
+    document.getElementById("reportSubtitle").removeAttribute("title");
+    document.title = "Dabaran Cold Outreach Report — locked";
+  }
+
+  renderTable();
+  renderDerived();
+  renderSaveHistory();
+  if (STATE.lastSaved) { markSaved(); } else { saveStatusText.textContent = "No edits yet"; }
+})();
+</script>
+</body>
+</html>
